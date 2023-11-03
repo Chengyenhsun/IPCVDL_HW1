@@ -28,4 +28,27 @@ def Q1_1():
     cv2.destroyAllWindows()
 
 
-Q1_1()
+def Q1_2():
+    # 讀取彩色圖片
+    image = cv2.imread(Q1_image_path + "rgb.jpg")
+
+    # 將彩色圖片轉成灰階圖片
+    I1 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # 分離通道
+    b, g, r = cv2.split(image)
+
+    # 計算I2 = (R + G + B) / 3
+    I2 = (r + g + b) / 3
+
+    # 將I2轉換為灰階圖片
+    I2 = I2.astype(np.uint8)
+
+    # 顯示灰階圖片
+    cv2.imshow("I1", I1)
+    cv2.imshow("I2", I2)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+Q1_2()
