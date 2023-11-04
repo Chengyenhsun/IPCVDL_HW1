@@ -9,7 +9,7 @@ image = cv2.imread(Q3_image_path + "building.jpg")
 # 步驟1：將RGB圖像轉換為灰度圖像
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-# 步骤2：使用高斯平滑滤波器对灰度图像进行平滑处理
+# 步驟2：使用高斯平滑滤波器对灰度图像进行平滑处理
 kernel_size = 5
 smoothed_image = cv2.GaussianBlur(gray, (kernel_size, kernel_size), 0)
 
