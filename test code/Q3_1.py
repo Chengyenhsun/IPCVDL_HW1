@@ -24,8 +24,18 @@ smoothed_image = apply_gaussian_blur(gray, kernel_size)
 
 # 步驟3：使用Sobel x運算子進行邊緣檢測
 sobel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]], dtype=np.float32)
-sobel_x_image = cv2.filter2D(smoothed_image, -1, sobel_x)
 
+rows, cols = smoothed_image.shape
+sobel_x_image = np.zeros_like(smoothed_image, dtype=np.float32)
+
+for i in range(1, rows - 1):
+    for j in range(1, cols - 1):
+        sobel_x_image[i, j] = np.sum(
+            smoothed_image[i - 1 : i + 2, j - 1 : j + 2] * sobel_x
+        )
+
+sobel_x_image = np.uint8(np.abs(sobel_x_image))
+cv2.imwrite(Q3_image_path + "sobel_x_image.jpg", sobel_x_image)
 
 # 步驟4：顯示結果
 cv2.imshow("sobel x", sobel_x_image)
