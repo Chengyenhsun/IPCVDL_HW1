@@ -99,9 +99,9 @@ def Q3_2():
     sobel_y_image = cv2.filter2D(smoothed_image2, -1, sobel_y)
 
     # 步驟4：顯示結果
-    cv2.imshow("sobel x", sobel_y_image)
+    cv2.imshow("sobel y", sobel_y_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 
-Q3_1()
+Q3_2()
