@@ -7,9 +7,14 @@ Q2_image_path = "Dataset_OpenCvDl_Hw1/Q2_image/"
 # 讀取彩色圖片
 image = cv2.imread(Q2_image_path + "image1.jpg")
 
+# 設定初始的半徑大小
+radius = 0
+
 
 # 創建一個函數，用於更新圖像
-def update_image(*args):
+def update_image(value):
+    global radius
+    radius = value + 1
     # 獲取trackbar的當前值
     radius = cv2.getTrackbarPos("Radius", "Gaussian Blur")
 
@@ -25,7 +30,7 @@ def update_image(*args):
 
 cv2.namedWindow("Gaussian Blur")
 
-cv2.createTrackbar("Radius", "Gaussian Blur", 1, 5, update_image)
+cv2.createTrackbar("Radius", "Gaussian Blur", 0, 5, update_image)
 
 cv2.imshow("Gaussian Blur", image)
 
