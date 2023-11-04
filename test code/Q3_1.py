@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 
-
 Q3_image_path = "Dataset_OpenCvDl_Hw1/Q3_image/"
 
 # 讀取彩色圖片
@@ -21,11 +20,9 @@ def apply_gaussian_blur(image, kernel_size):
 kernel_size = 5
 smoothed_image = apply_gaussian_blur(gray, kernel_size)
 
-
 # 步驟3：使用Sobel x運算子進行邊緣檢測
 sobel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]], dtype=np.float32)
 sobel_x_image = cv2.filter2D(smoothed_image, -1, sobel_x)
-
 
 # 步驟4：顯示結果
 cv2.imshow("sobel x", sobel_x_image)
