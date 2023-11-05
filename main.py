@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5 import QtWidgets
 from HW1UI_ui import Ui_MainWindow
 
 Q1_image_path = "Dataset_OpenCvDl_Hw1/Q1_image/"
@@ -273,9 +273,7 @@ def Q4():
     cv2.destroyAllWindows()
 
 
-app = QtCore.QCoreApplication.instance()
-if app is None:
-    app = QtWidgets.QApplication(sys.argv)
+app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
 ui = Ui_MainWindow()
 ui.setupUi(MainWindow)
