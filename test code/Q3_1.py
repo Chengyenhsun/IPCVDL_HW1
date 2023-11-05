@@ -6,27 +6,28 @@ Q3_image_path = "Dataset_OpenCvDl_Hw1/Q3_image/"
 # 讀取彩色圖片
 image = cv2.imread(Q3_image_path + "building.jpg")
 
-# 步驟1：將RGB圖像轉換為灰度圖像
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# Convert the image to grayscale
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-# 步驟2：使用高斯平滑滤波器对灰度图像进行平滑处理
-kernel_size = 5
-smoothed_image = cv2.GaussianBlur(gray, (kernel_size, kernel_size), 0)
+# Smooth the grayscale image with Gaussian smoothing
+smoothed_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
 
-# Sobel x運算子進行邊緣檢測
-sobel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]], dtype=np.float32)
+# Define the Sobel x operator
+sobel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
 
-rows, cols = smoothed_image.shape
+# Initialize an empty output image
 sobel_x_image = np.zeros_like(smoothed_image, dtype=np.float32)
 
-for i in range(1, rows - 1):
-    for j in range(1, cols - 1):
-        sobel_x_image[i, j] = np.sum(
-            smoothed_image[i - 1 : i + 2, j - 1 : j + 2] * sobel_x
-        )
+# Apply the Sobel x operator to the smoothed image
+for y in range(1, smoothed_image.shape[0] - 1):
+    for x in range(1, smoothed_image.shape[1] - 1):
+        sobel_x_value = np.sum(smoothed_image[y - 1 : y + 2, x - 1 : x + 2] * sobel_x)
+        sobel_x_image[y, x] = sobel_x_value
 
-# 步驟4：顯示結果
-sobel_x_image = np.uint8(np.abs(sobel_x_image))
-cv2.imshow("Sobel x", sobel_x_image)
+# Clip pixel values to the range [0, 255]
+sobel_x_image = np.clip(sobel_x_image, 0, 255).astype(np.uint8)
+
+# Show the Sobel x image
+cv2.imshow("Sobel X Image", sobel_x_image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
