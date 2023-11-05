@@ -6,48 +6,50 @@ Q3_image_path = "Dataset_OpenCvDl_Hw1/Q3_image/"
 # 讀取彩色圖片
 image = cv2.imread(Q3_image_path + "building.jpg")
 
-# 將RGB圖像轉換為灰度圖像
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# Convert the image to grayscale
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
+# Smooth the grayscale image with Gaussian smoothing
+smoothed_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
 
-# 調整平滑程度的核大小
-def apply_gaussian_blur(image, kernel_size):
-    blurred = cv2.GaussianBlur(image, (kernel_size, kernel_size), 0)
-    return blurred
+# Define the Sobel x operator
+sobel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
 
+# Define the Sobel y operator
+sobel_y = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]])
 
-# 步驟2：使用高斯平滑濾波器對灰度圖像進行平滑處理
-kernel_size = 5
-smoothed_image = apply_gaussian_blur(gray, kernel_size)
+# Initialize empty output images
+sobel_x_image = np.zeros_like(smoothed_image, dtype=np.float32)
+sobel_y_image = np.zeros_like(smoothed_image, dtype=np.float32)
 
-# 讀取Sobel x和Sobel y圖像，這些圖像已經經過相同的前處理步驟
-sobel_x_image = cv2.imread("sobel_x.jpg", cv2.IMREAD_GRAYSCALE)
-sobel_y_image = cv2.imread("sobel_y.jpg", cv2.IMREAD_GRAYSCALE)
+# Apply the Sobel x and Sobel y operators to the smoothed image
+for y in range(1, smoothed_image.shape[0] - 1):
+    for x in range(1, smoothed_image.shape[1] - 1):
+        sobel_x_value = np.sum(smoothed_image[y - 1 : y + 2, x - 1 : x + 2] * sobel_x)
+        sobel_y_value = np.sum(smoothed_image[y - 1 : y + 2, x - 1 : x + 2] * sobel_y)
+        sobel_x_image[y, x] = sobel_x_value
+        sobel_y_image[y, x] = sobel_y_value
 
-# 步驟3：使用Sobel運算子進行邊緣檢測
-sobel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]], dtype=np.float32)
-sobel_x_image = cv2.filter2D(smoothed_image, -1, sobel_x)
+# Clip pixel values to the range [0, 255]
+sobel_x_image = np.clip(sobel_x_image, 0, 255).astype(np.uint8)
+sobel_y_image = np.clip(sobel_y_image, 0, 255).astype(np.uint8)
 
-sobel_y = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]], dtype=np.float32)
-sobel_y_image = cv2.filter2D(smoothed_image, -1, sobel_y)
+gx = np.zeros(sobel_x_image.shape, dtype=np.uint8)
+gy = np.zeros(sobel_y_image.shape, dtype=np.uint8)
+gxy = np.zeros(sobel_x_image.shape, dtype=np.uint8)
 
-# 步驟1：結合Sobel x和Sobel y圖像
-combined_image = np.sqrt(sobel_x_image**2 + sobel_y_image**2)
+for h in range(1, sobel_x_image.shape[0] - 1):
+    for w in range(1, sobel_x_image.shape[1] - 1):
+        sx = sobel_x_image[h, w]
+        sy = sobel_y_image[h, w]
 
-# 步驟2：正規化結合的圖像
-combined_image = (
-    (combined_image - np.min(combined_image))
-    / (np.max(combined_image) - np.min(combined_image))
-    * 255
-)
-combined_image = combined_image.astype(np.uint8)
+        sxy = int(np.round(np.sqrt(sx**2 + sy**2)))
 
-# 步驟3：應用閾值處理
-threshold_value = 128
-thresholded_image = np.where(combined_image >= threshold_value, 255, 0)
+        gx[h, w] = np.clip(sx, 0, 255)
+        gy[h, w] = np.clip(sy, 0, 255)
+        gxy[h, w] = np.clip(sxy, 0, 255)
 
-# 顯示結果
-# cv2.imshow("Combined Image", combined_image)
-cv2.imshow("Thresholded Image", thresholded_image)
+# Show the gradient magnitude
+cv2.imshow("Gradient Magnitude", gxy)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
