@@ -1,9 +1,13 @@
 import cv2
 import numpy as np
+import sys
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from HW1UI_ui import Ui_MainWindow
 
 Q1_image_path = "Dataset_OpenCvDl_Hw1/Q1_image/"
 Q2_image_path = "Dataset_OpenCvDl_Hw1/Q2_image/"
 Q3_image_path = "Dataset_OpenCvDl_Hw1/Q3_image/"
+Q4_image_path = "Dataset_OpenCvDl_Hw1/Q4_image/"
 
 
 def Q1_1():
@@ -235,4 +239,60 @@ def Q3_2():
     cv2.destroyAllWindows()
 
 
-Q2_2()
+def Q4():
+    # 讀取彩色圖片
+    image = cv2.imread(Q4_image_path + "burger.png")
+
+    # 旋轉角度、縮放比例和平移距離
+    angle = 30
+    scale = 0.9
+    tx = 535
+    ty = 335
+
+    # 圖像中心
+    center_x = 240
+    center_y = 200
+
+    # 構建旋轉矩陣
+    rotation_matrix = cv2.getRotationMatrix2D((center_x, center_y), angle, scale)
+
+    # 執行選轉操作
+    rotated_image = cv2.warpAffine(
+        image, rotation_matrix, (image.shape[1], image.shape[0])
+    )
+
+    # 執行平移操作
+    translation_matrix = np.float32([[1, 0, tx], [0, 1, ty]])
+    translated_image = cv2.warpAffine(
+        rotated_image, translation_matrix, (image.shape[1], image.shape[0])
+    )
+
+    # 顯示結果圖像
+    cv2.imshow("Transformed Image", translated_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+app = QtCore.QCoreApplication.instance()
+if app is None:
+    app = QtWidgets.QApplication(sys.argv)
+MainWindow = QtWidgets.QMainWindow()
+ui = Ui_MainWindow()
+ui.setupUi(MainWindow)
+
+ui.LoadImage1_Button.clicked.connect()
+ui.LoadImage2_Button.clicked.connect()
+ui.Q1_1_Button.clicked.connect(Q1_1)
+ui.Q1_2_Button.clicked.connect()
+ui.Q1_3_Button.clicked.connect()
+ui.Q2_1_Button.clicked.connect()
+ui.Q2_2_Button.clicked.connect()
+ui.Q2_3_Button.clicked.connect()
+ui.Q3_1_Button.clicked.connect()
+ui.Q3_2_Button.clicked.connect()
+ui.Q3_3_Button.clicked.connect()
+ui.Q4_Button.clicked.connect()
+ui.Q5_1_Button.clicked.connect()
+ui.Q5_2_Button.clicked.connect()
+ui.Q5_3_Button.clicked.connect()
+ui.Q5_4_Button.clicked.connect()
