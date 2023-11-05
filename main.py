@@ -1,13 +1,14 @@
 import cv2
 import numpy as np
 import sys
-from PyQt5 import QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from HW1UI_ui import Ui_MainWindow
 
 Q1_image_path = "Dataset_OpenCvDl_Hw1/Q1_image/"
 Q2_image_path = "Dataset_OpenCvDl_Hw1/Q2_image/"
 Q3_image_path = "Dataset_OpenCvDl_Hw1/Q3_image/"
 Q4_image_path = "Dataset_OpenCvDl_Hw1/Q4_image/"
+Q5_image_path = "Dataset_OpenCvDl_Hw1/Q5_image/"
 
 
 def Q1_1():
@@ -273,12 +274,14 @@ def Q4():
     cv2.destroyAllWindows()
 
 
-app = QtWidgets.QApplication(sys.argv)
+app = QtCore.QCoreApplication.instance()
+if app is None:
+    app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
 ui = Ui_MainWindow()
 ui.setupUi(MainWindow)
 
-# ui.LoadImage1_Button.clicked.connect()
+ui.LoadImage1_Button.clicked.connect(Q1_image_path)
 # ui.LoadImage2_Button.clicked.connect()
 ui.Q1_1_Button.clicked.connect(Q1_1)
 # ui.Q1_2_Button.clicked.connect()
