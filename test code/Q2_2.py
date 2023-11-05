@@ -32,12 +32,8 @@ def update_radius(value):
 # 創建一個軌跡條，用於調整半徑大小
 cv2.createTrackbar("Radius", "Bilateral Filter", 0, 5, update_radius)
 
-# 顯示初始的處理後圖片
-filtered_image = cv2.bilateralFilter(image, (2 * radius + 1), sigmaColor, sigmaSpace)
-cv2.imshow("Bilateral Filter", filtered_image)
-
 # 等待用戶按下任意按鍵
 cv2.waitKey(0)
 
-# 釋放資源
+
 cv2.destroyAllWindows()
