@@ -11,9 +11,21 @@ Q4_image_path = "Dataset_OpenCvDl_Hw1/Q4_image/"
 Q5_image_path = "Dataset_OpenCvDl_Hw1/Q5_image/"
 
 
+def load_image():
+    global filePath
+    filePath = QtWidgets.QFileDialog.getOpenFileName(None, "Open File", ".")[0]
+    print(filePath)
+
+
+def load_image5():
+    global filePath2
+    filePath2 = QtWidgets.QFileDialog.getOpenFileNames(None, "Open File", ".")[0]
+    print(filePath2)
+
+
 def Q1_1():
     # 讀取彩色圖片
-    image = cv2.imread(Q1_image_path + "rgb.jpg")
+    image = cv2.imread(filePath)
 
     # 分離通道
     b, g, r = cv2.split(image)
@@ -37,7 +49,7 @@ def Q1_1():
 
 def Q1_2():
     # 讀取彩色圖片
-    image = cv2.imread(Q1_image_path + "rgb.jpg")
+    image = cv2.imread(filePath)
 
     # 將彩色圖片轉成灰階圖片
     I1 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -60,7 +72,7 @@ def Q1_2():
 
 def Q1_3():
     # 讀取彩色圖片
-    image = cv2.imread(Q1_image_path + "rgb.jpg")
+    image = cv2.imread(filePath)
 
     # 步驟1: 轉換圖像為HSV格式
     hsv_img = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -90,7 +102,7 @@ def Q1_3():
 
 def Q2_1():
     # 讀取彩色圖片
-    image = cv2.imread(Q2_image_path + "image1.jpg")
+    image = cv2.imread(filePath)
 
     # 創建一個函數，用於更新圖像
     def update_Q21(value):
@@ -120,7 +132,7 @@ def Q2_1():
 
 def Q2_2():
     # 讀取彩色圖片
-    image = cv2.imread(Q2_image_path + "image1.jpg")
+    image = cv2.imread(filePath)
 
     # 設定sigmaColor和sigmaSpace的值
     sigmaColor = 90
@@ -151,7 +163,7 @@ def Q2_2():
 
 def Q2_3():
     # 讀取彩色圖片
-    image = cv2.imread(Q2_image_path + "image2.jpg")
+    image = cv2.imread(filePath)
 
     # 回呼函數，當軌跡條值改變時調用
     def update_Q23(value):
@@ -178,7 +190,7 @@ def Q2_3():
 
 def Q3_1():
     # 讀取彩色圖片
-    image = cv2.imread(Q3_image_path + "building.jpg")
+    image = cv2.imread(filePath)
 
     # 步驟1：將RGB圖像轉換為灰度圖像
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -204,7 +216,7 @@ def Q3_1():
 
 def Q3_2():
     # 讀取彩色圖片
-    imageq32 = cv2.imread(Q3_image_path + "building.jpg")
+    imageq32 = cv2.imread(filePath)
 
     # 步驟1：將RGB圖像轉換為灰度圖像
     grayq32 = cv2.cvtColor(imageq32, cv2.COLOR_BGR2GRAY)
@@ -230,7 +242,7 @@ def Q3_2():
 
 def Q4():
     # 讀取彩色圖片
-    image = cv2.imread(Q4_image_path + "burger.png")
+    image = cv2.imread(filePath)
 
     # 旋轉角度、縮放比例和平移距離
     angle = 30
@@ -269,7 +281,7 @@ MainWindow = QtWidgets.QMainWindow()
 ui = Ui_MainWindow()
 ui.setupUi(MainWindow)
 
-# ui.LoadImage1_Button.clicked.connect(Q1_image_path)
+ui.LoadImage1_Button.clicked.connect(load_image)
 ui.Q1_1_Button.clicked.connect(Q1_1)
 ui.Q1_2_Button.clicked.connect(Q1_2)
 ui.Q1_3_Button.clicked.connect(Q1_3)
@@ -281,6 +293,7 @@ ui.Q3_2_Button.clicked.connect(Q3_2)
 # ui.Q3_3_Button.clicked.connect()
 # ui.Q3_4_Button.clicked.connect()
 # ui.Q4_Button.clicked.connect()
+ui.Q5_Load_Button.clicked.connect(load_image5)
 # ui.Q5_1_Button.clicked.connect()
 # ui.Q5_2_Button.clicked.connect()
 # ui.Q5_3_Button.clicked.connect()
