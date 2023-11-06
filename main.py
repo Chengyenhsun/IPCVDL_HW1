@@ -4,12 +4,6 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from HW1UI_ui import Ui_MainWindow
 
-Q1_image_path = "Dataset_OpenCvDl_Hw1/Q1_image/"
-Q2_image_path = "Dataset_OpenCvDl_Hw1/Q2_image/"
-Q3_image_path = "Dataset_OpenCvDl_Hw1/Q3_image/"
-Q4_image_path = "Dataset_OpenCvDl_Hw1/Q4_image/"
-Q5_image_path = "Dataset_OpenCvDl_Hw1/Q5_image/"
-
 
 def load_image():
     global filePath
