@@ -3,18 +3,22 @@ import numpy as np
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from HW1UI_ui import Ui_MainWindow
+import os
+from PIL import Image
+import torchvision.transforms as transforms
+import matplotlib.pyplot as plt
 
 
 def load_image():
     global filePath
     filePath = QtWidgets.QFileDialog.getOpenFileName(None, "Open File", ".")[0]
-    print(filePath)
+    # print(filePath)
 
 
 def load_image5():
     global filePath2
     filePath2 = QtWidgets.QFileDialog.getOpenFileNames(None, "Open File", ".")[0]
-    print(filePath2)
+    # print(filePath2)
 
 
 def Q1_1():
@@ -268,6 +272,37 @@ def Q4():
     cv2.destroyAllWindows()
 
 
+def Q5_1():
+    images = [Image.open(image_file) for image_file in filePath2]
+
+    # 資料增強
+    transform = transforms.Compose(
+        [
+            transforms.RandomHorizontalFlip(),  # 隨機水平翻轉
+            transforms.RandomVerticalFlip(),  # 隨機垂直翻轉
+            transforms.RandomRotation(30),  # 隨機旋轉 (-30 到 30 度之間)
+        ]
+    )
+
+    augmented_images = [transform(image) for image in images]
+
+    # 提取檔名（不包含格式）作為標籤
+    labels = [os.path.splitext(os.path.basename(file))[0] for file in filePath2]
+
+    # 顯示增強後的圖像和標籤在一個新視窗中
+    _, axes = plt.subplots(3, 3, figsize=(6, 6))
+
+    for i, (original, augmented, label) in enumerate(
+        zip(images, augmented_images, labels)
+    ):
+        ax = axes[i // 3, i % 3]
+        ax.set_title(label)
+        ax.imshow(original if i % 3 == 0 else augmented)
+        ax.axis("off")
+
+    plt.show()
+
+
 app = QtCore.QCoreApplication.instance()
 if app is None:
     app = QtWidgets.QApplication(sys.argv)
@@ -288,7 +323,7 @@ ui.Q3_2_Button.clicked.connect(Q3_2)
 # ui.Q3_4_Button.clicked.connect()
 # ui.Q4_Button.clicked.connect()
 ui.Q5_Load_Button.clicked.connect(load_image5)
-# ui.Q5_1_Button.clicked.connect()
+ui.Q5_1_Button.clicked.connect(Q5_1)
 # ui.Q5_2_Button.clicked.connect()
 # ui.Q5_3_Button.clicked.connect()
 # ui.Q5_4_Button.clicked.connect()
