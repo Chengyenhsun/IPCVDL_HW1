@@ -270,7 +270,6 @@ ui = Ui_MainWindow()
 ui.setupUi(MainWindow)
 
 # ui.LoadImage1_Button.clicked.connect(Q1_image_path)
-# ui.LoadImage2_Button.clicked.connect()
 ui.Q1_1_Button.clicked.connect(Q1_1)
 ui.Q1_2_Button.clicked.connect(Q1_2)
 ui.Q1_3_Button.clicked.connect(Q1_3)
