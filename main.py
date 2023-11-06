@@ -247,6 +247,68 @@ def Q3_2():
     cv2.destroyAllWindows()
 
 
+def Q3_3():
+    # 讀取彩色圖片
+    image = cv2.imread(filePath)
+
+    # Convert the image to grayscale
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # Smooth the grayscale image with Gaussian smoothing
+    smoothed_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
+
+    # Define the Sobel x operator
+    sobel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
+
+    # Define the Sobel y operator
+    sobel_y = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]])
+
+    # Initialize empty output images
+    sobel_x_image = np.zeros_like(smoothed_image, dtype=np.float32)
+    sobel_y_image = np.zeros_like(smoothed_image, dtype=np.float32)
+
+    # Apply the Sobel x and Sobel y operators to the smoothed image
+    for y in range(1, smoothed_image.shape[0] - 1):
+        for x in range(1, smoothed_image.shape[1] - 1):
+            sobel_x_value = np.sum(
+                smoothed_image[y - 1 : y + 2, x - 1 : x + 2] * sobel_x
+            )
+            sobel_y_value = np.sum(
+                smoothed_image[y - 1 : y + 2, x - 1 : x + 2] * sobel_y
+            )
+            sobel_x_image[y, x] = sobel_x_value
+            sobel_y_image[y, x] = sobel_y_value
+
+    # Clip pixel values to the range [0, 255]
+    sobel_x_image = np.clip(sobel_x_image, 0, 255).astype(np.uint8)
+    sobel_y_image = np.clip(sobel_y_image, 0, 255).astype(np.uint8)
+
+    gx = np.zeros(sobel_x_image.shape, dtype=np.uint8)
+    gy = np.zeros(sobel_y_image.shape, dtype=np.uint8)
+    gxy = np.zeros(sobel_x_image.shape, dtype=np.uint8)
+
+    for h in range(1, sobel_x_image.shape[0] - 1):
+        for w in range(1, sobel_x_image.shape[1] - 1):
+            sx = sobel_x_image[h, w]
+            sy = sobel_y_image[h, w]
+
+            sxy = int(np.round(np.sqrt(sx**2 + sy**2)))
+
+            gx[h, w] = np.clip(sx, 0, 255)
+            gy[h, w] = np.clip(sy, 0, 255)
+            gxy[h, w] = np.clip(sxy, 0, 255)
+
+    threshold = 128
+    ret, thresholded_image = cv2.threshold(gxy, threshold, 255, cv2.THRESH_BINARY)
+
+    # Show the gradient magnitude
+    cv2.imshow("Gradient Magnitude", gxy)
+    # Show the thresholded image
+    cv2.imshow("Thresholded Image", thresholded_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
 def Q4():
     # 讀取彩色圖片
     image = cv2.imread(filePath)
@@ -432,7 +494,7 @@ ui.Q2_2_Button.clicked.connect(Q2_2)
 ui.Q2_3_Button.clicked.connect(Q2_3)
 ui.Q3_1_Button.clicked.connect(Q3_1)
 ui.Q3_2_Button.clicked.connect(Q3_2)
-# ui.Q3_3_Button.clicked.connect()
+ui.Q3_3_Button.clicked.connect(Q3_3)
 # ui.Q3_4_Button.clicked.connect()
 ui.Q4_Button.clicked.connect(Q4)
 ui.Q5_Load_Button.clicked.connect(load_image5)
