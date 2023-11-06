@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import sys
 from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtGui import QPixmap
 from HW1UI_ui import Ui_MainWindow
 import os
 from PIL import Image
@@ -17,6 +18,16 @@ def load_image():
     global filePath
     filePath = QtWidgets.QFileDialog.getOpenFileName(None, "Open File", ".")[0]
     # print(filePath)
+
+
+def load_image5():
+    global filePath
+    filePath = QtWidgets.QFileDialog.getOpenFileName(None, "Open File", ".")[0]
+    # print(filePath)
+    image = QPixmap(filePath).scaled(148, 148)
+    scene = QtWidgets.QGraphicsScene()  # 加入圖片
+    scene.addPixmap(image)  # 將圖片加入 scene
+    ui.InferenceImage_View.setScene(scene)
 
 
 def Q1_1():
@@ -369,12 +380,12 @@ def Q5_4():
     ]
 
     # 輸出結果
-    print(
-        "Predicted class: {} ({})".format(class_names[predicted_class], predicted_class)
-    )
-    print("Class probabilities:")
-    for i, prob in enumerate(probabilities):
-        print("{}: {:.2f}%".format(class_names[i], prob * 100))
+    # print(
+    #     "Predicted class: {} ({})".format(class_names[predicted_class], predicted_class)
+    # )
+    # print("Class probabilities:")
+    # for i, prob in enumerate(probabilities):
+    #     print("{}: {:.2f}%".format(class_names[i], prob * 100))
 
     ui.predict_label.setText("Predicted = " + class_names[predicted_class])
 
@@ -418,7 +429,7 @@ ui.Q3_2_Button.clicked.connect(Q3_2)
 # ui.Q3_3_Button.clicked.connect()
 # ui.Q3_4_Button.clicked.connect()
 # ui.Q4_Button.clicked.connect()
-ui.Q5_Load_Button.clicked.connect(load_image)
+ui.Q5_Load_Button.clicked.connect(load_image5)
 ui.Q5_1_Button.clicked.connect(Q5_1)
 ui.Q5_2_Button.clicked.connect(Q5_2)
 ui.Q5_3_Button.clicked.connect(Q5_3)
