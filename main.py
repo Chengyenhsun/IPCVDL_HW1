@@ -16,14 +16,26 @@ from torchvision.transforms import Compose, ToTensor, Normalize
 
 def load_image():
     global filePath
-    filePath = QtWidgets.QFileDialog.getOpenFileName(None, "Open File", ".")[0]
+    abs_path = QtWidgets.QFileDialog.getOpenFileName(None, "Open File", ".")[0]
+    # 获取当前工作目录
+    current_dir = os.getcwd()
+
+    # 计算相对路径
+    filePath = os.path.relpath(abs_path, current_dir)
+    # print(abs_path)
     # print(filePath)
 
 
 def load_image5():
     global filePath
-    filePath = QtWidgets.QFileDialog.getOpenFileName(None, "Open File", ".")[0]
+    abs_path = QtWidgets.QFileDialog.getOpenFileName(None, "Open File", ".")[0]
+    # 获取当前工作目录
+    current_dir = os.getcwd()
+
+    # 计算相对路径
+    filePath = os.path.relpath(abs_path, current_dir)
     # print(filePath)
+
     image = QPixmap(filePath).scaled(148, 148)
     scene = QtWidgets.QGraphicsScene()  # 加入圖片
     scene.addPixmap(image)  # 將圖片加入 scene
