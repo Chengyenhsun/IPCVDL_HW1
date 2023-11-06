@@ -18,12 +18,6 @@ def load_image():
     # print(filePath)
 
 
-def load_image5():
-    global filePath2
-    filePath2 = QtWidgets.QFileDialog.getOpenFileNames(None, "Open File", ".")[0]
-    # print(filePath2)
-
-
 def Q1_1():
     # 讀取彩色圖片
     image = cv2.imread(filePath)
@@ -276,7 +270,13 @@ def Q4():
 
 
 def Q5_1():
-    images = [Image.open(image_file) for image_file in filePath2]
+    # images = [Image.open(image_file) for image_file in filePath2]
+    image_folder = "Dataset_OpenCvDl_Hw1/Q5_image/Q5_1"
+    # 載入圖像
+    image_files = [
+        os.path.join(image_folder, filename) for filename in os.listdir(image_folder)
+    ]
+    images = [Image.open(image_file) for image_file in image_files]
 
     # 資料增強
     transform = transforms.Compose(
@@ -290,7 +290,7 @@ def Q5_1():
     augmented_images = [transform(image) for image in images]
 
     # 提取檔名（不包含格式）作為標籤
-    labels = [os.path.splitext(os.path.basename(file))[0] for file in filePath2]
+    labels = [os.path.splitext(os.path.basename(file))[0] for file in image_files]
 
     # 顯示增強後的圖像和標籤在一個新視窗中
     _, axes = plt.subplots(3, 3, figsize=(6, 6))
@@ -341,7 +341,7 @@ ui.Q3_2_Button.clicked.connect(Q3_2)
 # ui.Q3_3_Button.clicked.connect()
 # ui.Q3_4_Button.clicked.connect()
 # ui.Q4_Button.clicked.connect()
-ui.Q5_Load_Button.clicked.connect(load_image5)
+ui.Q5_Load_Button.clicked.connect(load_image)
 ui.Q5_1_Button.clicked.connect(Q5_1)
 ui.Q5_2_Button.clicked.connect(Q5_2)
 ui.Q5_3_Button.clicked.connect(Q5_3)
