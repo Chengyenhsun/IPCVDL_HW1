@@ -314,6 +314,14 @@ def Q5_2():
     summary(vgg19_bn, (3, 224, 224))  # 輸入圖像維度 (3, 224, 224)
 
 
+def Q5_3():
+    image = cv2.imread("learning_history.jpg")
+    # 顯示結果圖像
+    cv2.imshow("Training/Validating Accuracy and Loss ", image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
 app = QtCore.QCoreApplication.instance()
 if app is None:
     app = QtWidgets.QApplication(sys.argv)
@@ -336,7 +344,7 @@ ui.Q3_2_Button.clicked.connect(Q3_2)
 ui.Q5_Load_Button.clicked.connect(load_image5)
 ui.Q5_1_Button.clicked.connect(Q5_1)
 ui.Q5_2_Button.clicked.connect(Q5_2)
-# ui.Q5_3_Button.clicked.connect()
+ui.Q5_3_Button.clicked.connect(Q5_3)
 # ui.Q5_4_Button.clicked.connect()
 
 MainWindow.show()
