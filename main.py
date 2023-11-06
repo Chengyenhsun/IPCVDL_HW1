@@ -7,6 +7,9 @@ import os
 from PIL import Image
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
+import torch
+import torchvision.models as models
+from torchsummary import summary
 
 
 def load_image():
@@ -303,6 +306,14 @@ def Q5_1():
     plt.show()
 
 
+def Q5_2():
+    # 建立一個帶有批量歸一化的 VGG19 模型
+    vgg19_bn = models.vgg19_bn(num_classes=10)
+
+    # 使用 torchsummary.summary 在終端中顯示模型結構
+    summary(vgg19_bn, (3, 224, 224))  # 輸入圖像維度 (3, 224, 224)
+
+
 app = QtCore.QCoreApplication.instance()
 if app is None:
     app = QtWidgets.QApplication(sys.argv)
@@ -324,7 +335,7 @@ ui.Q3_2_Button.clicked.connect(Q3_2)
 # ui.Q4_Button.clicked.connect()
 ui.Q5_Load_Button.clicked.connect(load_image5)
 ui.Q5_1_Button.clicked.connect(Q5_1)
-# ui.Q5_2_Button.clicked.connect()
+ui.Q5_2_Button.clicked.connect(Q5_2)
 # ui.Q5_3_Button.clicked.connect()
 # ui.Q5_4_Button.clicked.connect()
 
