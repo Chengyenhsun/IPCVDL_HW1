@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5 import QtCore, QtWidgets
 from HW1UI_ui import Ui_MainWindow
 import os
 from PIL import Image
