@@ -252,10 +252,16 @@ def Q4():
     image = cv2.imread(filePath)
 
     # 旋轉角度、縮放比例和平移距離
-    angle = 30
-    scale = 0.9
-    tx = 535
-    ty = 335
+    try:
+        angle = int(ui.Rotation_Input.text())
+        scale = float(ui.Scaling_Input.text())
+        tx = int(ui.Tx_Input.text())
+        ty = int(ui.Ty_Input.text())
+    except:
+        angle = 0
+        scale = 1
+        tx = 0
+        ty = 0
 
     # 圖像中心
     center_x = 240
@@ -428,7 +434,7 @@ ui.Q3_1_Button.clicked.connect(Q3_1)
 ui.Q3_2_Button.clicked.connect(Q3_2)
 # ui.Q3_3_Button.clicked.connect()
 # ui.Q3_4_Button.clicked.connect()
-# ui.Q4_Button.clicked.connect()
+ui.Q4_Button.clicked.connect(Q4)
 ui.Q5_Load_Button.clicked.connect(load_image5)
 ui.Q5_1_Button.clicked.connect(Q5_1)
 ui.Q5_2_Button.clicked.connect(Q5_2)
