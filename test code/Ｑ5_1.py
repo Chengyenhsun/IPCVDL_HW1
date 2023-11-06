@@ -29,7 +29,7 @@ augmented_images = [transform(image) for image in images]
 labels = [os.path.splitext(os.path.basename(file))[0] for file in image_files]
 
 # 顯示增強後的圖像和標籤在一個新視窗中
-fig, axes = plt.subplots(3, 3, figsize=(12, 4))
+fig, axes = plt.subplots(3, 3, figsize=(6, 6))
 
 for i, (original, augmented, label) in enumerate(zip(images, augmented_images, labels)):
     ax = axes[i // 3, i % 3]
