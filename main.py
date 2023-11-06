@@ -376,6 +376,8 @@ def Q5_4():
     for i, prob in enumerate(probabilities):
         print("{}: {:.2f}%".format(class_names[i], prob * 100))
 
+    ui.predict_label.setText("Predicted = " + class_names[predicted_class])
+
     probs = [prob.item() for prob in probabilities]
 
     # 創建一個長條圖

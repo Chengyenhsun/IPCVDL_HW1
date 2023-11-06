@@ -449,7 +449,7 @@ Images</string>
      <string>5.4 Inference</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_13">
+   <widget class="QLabel" name="predict_label">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -804,7 +804,7 @@ Images</string>
      <x>0</x>
      <y>0</y>
      <width>714</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
