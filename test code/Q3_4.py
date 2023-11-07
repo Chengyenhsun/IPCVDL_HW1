@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
 # 讀取圖片
 Q3_image_path = "Dataset_OpenCvDl_Hw1/Q3_image/"
@@ -70,19 +71,19 @@ print("Gradient Angle:\n", gradient_angle)
 # cv2.imshow("Mask (120-180 degrees)", angle_range_mask)
 
 # 生成兩個不同範圍的角度掩碼
-mask1 = ((gradient_angle >= 120) & (gradient_angle <= 180)).astype(np.uint8) * 255
-mask2 = ((gradient_angle >= 210) & (gradient_angle <= 330)).astype(np.uint8) * 255
-# mask1 = cv2.inRange(gradient_angle, 120, 180)
-# mask2 = cv2.inRange(gradient_angle, 210, 330)
+# mask1 = ((gradient_angle >= 120) & (gradient_angle <= 180)).astype(np.uint8) * 255
+# mask2 = ((gradient_angle >= 210) & (gradient_angle <= 330)).astype(np.uint8) * 255
+mask1 = cv2.inRange(gradient_angle, 120, 180)
+mask2 = cv2.inRange(gradient_angle, 210, 330)
 
 
 result1 = cv2.bitwise_and(gxy, gxy, mask=mask1)
 result2 = cv2.bitwise_and(gxy, gxy, mask=mask2)
-# fig = plt.figure(figsize=(10,5))
-# plt.subplot(1, 2, 1), plt.title('120~180')
-# plt.imshow(result1,cmap=plt.get_cmap('gray')), plt.axis('off')
-# plt.subplot(1,2, 2), plt.title('210~330')
-# plt.imshow(result2,cmap=plt.get_cmap('gray')), plt.axis('off')
+# fig = plt.figure(figsize=(10, 5))
+# plt.subplot(1, 2, 1), plt.title("120~180")
+# plt.imshow(result1, cmap=plt.get_cmap("gray")), plt.axis("off")
+# plt.subplot(1, 2, 2), plt.title("210~330")
+# plt.imshow(result2, cmap=plt.get_cmap("gray")), plt.axis("off")
 
 
 cv2.imshow("result1", result1)
